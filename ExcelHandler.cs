@@ -1,8 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+using System;
 using ClosedXML.Excel;
 
-namespace WorkChargerMigration
+namespace JunUtility.ExcelUtility
 {
     /// <summary>
     /// Excel处理器
@@ -16,11 +15,13 @@ namespace WorkChargerMigration
         /// <param name="excelPath">Excel文件绝对路径</param>
         public ExcelHandler(string excelPath)
         {
-            int dotIndex = excelPath.LastIndexOf('.');
-            string suffix = excelPath.Substring(dotIndex);
-            if (!new SortedSet<string>() { ".xls", ".XLS", ".xlsx", ".XLSX" }.Contains(suffix))
-                throw new Exception("请选择Excel类型文件（.xls或.xlsx文件）");
-            this.excelPath = excelPath;
+            using (SupportedFileSuffix supportedSuffix = new(".xlsx", "xlsm", "xltx", "xltm"))
+            {
+                if (!supportedSuffix.CheckFileSuffix(excelPath))
+                    throw new Exception($"请选择Excel类型文件({supportedSuffix})");
+
+                this.excelPath = excelPath;
+            }
         }
 
         /// <summary>
