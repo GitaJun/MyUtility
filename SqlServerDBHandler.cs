@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Data.SqlClient;
 
-namespace WorkChargerMigration
+namespace JunUtility.SqlServerUtility
 {
     /// <summary>
     /// SqlServer数据库处理器
@@ -29,7 +29,6 @@ namespace WorkChargerMigration
         /// </summary>
         /// <param name="sql">sql语句</param>
         /// <param name="read">委托：利用闭包，操作通过执行数据库语句创造的SqlDataReader对象，进行数据读取</param>
-        /// <returns>数据载体</returns>
         public void GetData(string sql, Action<SqlDataReader> read)
         {
             using (SqlConnection connection = new SqlConnection($"server={server};uid={uid};pwd={pwd};database={database}"))
